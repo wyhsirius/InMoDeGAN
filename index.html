@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta name="description" content="InMoDeGAN-Interpretable Motion Decomposition Generative Adversarial Network for Video Generation">
+
+    	<title>InMoDeGAN-Interpretable Motion Decomposition Generative Adversarial Network for Video Generation</title>
+		
+    	<link href="css/bootstrap.min.css" rel="stylesheet">
+    	<link href="css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+	<div class="container">
+      <div class="header">
+        <h2><center>InMoDeGAN-Interpretable Motion Decomposition Generative Adversarial Network for Video Generation</center></h2>
+		<h3><center></center></h3>
+		<h4> <center> <a href="http://www-sop.inria.fr/members/Yaohui.Wang" class="text-info"> Yaohui Wang</a>  &nbsp&nbsp&nbsp&nbsp <a href="http://www-sop.inria.fr/members/Francois.Bremond/" class="text-info">François Brémond</a> &nbsp&nbsp&nbsp&nbsp <a href="http://antitza.com" class="text-info">Antitza Dantcheva</a> </center> </h4>
+		<h4> <center>Inria, &nbsp&nbsp Université Côte d&#39Azur</center> </h4>
+	  </div>
+
+      
+		<figure>
+		<center>
+		<img src="imgs/model.png" title="" style="max-width:80%;vertical-align:top"/>
+		<h3><a href="" class="text-info">[PDF]</a> &nbsp&nbsp&nbsp&nbsp <a href="" class="text-info">[Code(coming soon)]</a>
+		</center>
+		<!--
+		<figcaption><b>InMoDeGAN-architecture.</b> 
+		InMoDeGAN comprises of a Generator and a two-stream Discriminator. We design the architecture of the Generator based on proposed Linear Motion Decomposition. A motion bank is incorporated in the Generator to learn and store a motion dictionary D, which contains motion-directions [d<sub>0</sub>,d<sub>1</sub>,..,d<sub>N-1</sub>]. We use an appearance net G<sub>A</sub> to map an appearance noise z<sub>a</sub> into a latent code w<sub>0</sub>, which serves as the initial latent code of a generated video. A motion net G<sub>M</sub> maps a sequence of motion noises {z<sub>m<sub>1</sub></sub>, z<sub>m<sub>2</sub></sub>, ..., z<sub>m<sub>T-1</sub></sub>} into a sequence of {A<sub>1</sub>,A<sub>2</sub>,...,A<sub>T-1</sub>}, which represent motion magnitudes. Each latent code w<sub>t</sub> is computed based on Linear Motion Decomposition using w<sub>0</sub>, D and A<sub>t</sub>. Generated video V is obtained by a synthesis net G<sub>S</sub> that maps the sequence of latent codes {w<sub>0</sub>,w<sub>1</sub>,...,w<sub>T-1</sub>} into an image sequence {x<sub>0</sub>, x<sub>1</sub>, ..., x<sub>T-1</sub>}. Our discriminator comprises an image discriminator D<sub>I</sub> and a Temporal Pyramid Discriminator (TPD) that contains several video discriminators D<sub>V<sub>i</sub></sub>, leveraging different temporal speeds <sub><span>&#650;</span><sub>i</sub></sub> to improve generated video quality. While D<sub>I</sub> accepts as input a randomly sampled image per video, each D<sub>V<sub>i</sub></sub> is accountable for one temporal resolution.</figcaption>
+	  	-->
+		</figure>
+	  
+		
+	<div class="row">
+    <h2><center>1. Random Generation</center></h2>
+	<h5>We randomly sample different appearance noises z<sub>a</sub> and motion noise sequences {z<sub>m<sub>0</sub></sub>,z<sub>m<sub>1</sub></sub>,...,z<sub>m<sub>T-1</sub></sub>} on VoxCeleb2-mini in two resolutions (128x128, 64x64) and BAIR-robot.</h5>
+	<center>
+    <img src="demos/random_vox128.gif"  width='1080' height='810' />
+    <img src="demos/random_vox64.gif"  width='1080' height='810' />
+    <img src="demos/random_bair.gif"  width='1080' height='810' />
+	</center>
+	</div>	
+	
+	<div class="row">
+    <h2><center>2. Motion Decomposition</center></h2>
+<h5><b>All</b> indicates generated videos are obtained by activating <b>all</b> directions in the motion bank, whereas <b>d<sub>i</sub></b> denotes that <b>only</b> the i<sup>th</sup> direction has been activated. For VoxCeleb2-mini (128x128), We observe that d<sub>2</sub> represents <b>talking</b>, whereas d<sub>511</sub> corresponds to <b>head moving</b>. For VoxCeleb2-mini (64x64), we have quantitatively proven in the main paper that motion related to mouth and head are represented by d<sub>0</sub> and d<sub>511</sub>, respectively. Generated videos verify this result. For BAIR-robot, we show generated videos with d<sub>1</sub> and d<sub>511</sub> activated, respectively. We provide corresponding optical flow videos, which illustrate the moving directions of the robot arm when the two directions are activated. We note that while d<sub>1</sub> moves the robot arm <b>back and forth</b>, d<sub>511</sub> moves it <b>left and right</b>.</h5>
+	<center>
+    <img src="demos/decompose_motion_vox128.gif"  width='1080' height='810' />
+    <img src="demos/decompose_motion_vox64.gif"  width='1080' height='810' />
+    <img src="demos/decompose_motion_bair.gif"  width='1080' height='810' />
+	</center>
+	</div>
+
+	<div class="row">
+    <h2><center>3. Appearance and Motion Disentanglement</center></h2>
+	<h5>For each dataset, we show videos generated by combining one appearance noise vector z<sub>a</sub> and a number of motion noise vectors {z<sub>m<sub>0</sub></sub>,z<sub>m<sub>1</sub></sub>,...,z<sub>m<sub>T-1</sub></sub>}.</h5>
+	<center>
+    <img src="demos/fix_app_vox128.gif"  width='1080' height='810' />
+    <img src="demos/fix_app_vox64.gif"  width='1080' height='810' />
+    <img src="demos/fix_app_bair.gif"  width='1080' height='810' />
+	</center>
+	</div>
+
+	<div class="row">
+    <h2><center>4. Linear Interpolation</center></h2>
+	<h5>We linearly interpolate two appearance codes, z<sub>a<sub>0</sub></sub> and z<sub>a<sub>1</sub></sub>, and associate each intermediate appearance to one motion code sequence. Results show that intermediate appearances are altered gradually and smoothly. Notably, we observe continuous changes of head pose, age and cloth color in videos related to VoxCeleb2-mini; as well as changes of starting position and background in videos related to BAIR-robot.</h5>
+	<center>
+    <img src="demos/interpolation_vox128.gif"  width='1080' height='810' />
+    <img src="demos/interpolation_vox64.gif"  width='1080' height='810' />
+    <img src="demos/interpolation_bair.gif"  width='1080' height='810' />
+	</center>
+	</div>
+
+	<div class="row">
+    <h2><center>5. Controllable Generation</center></h2>
+	<h5>In left part, a <b>linear</b> trajectory is provided for d<sub>1</sub> and a <b>sinusoidal</b> trajectory for d<sub>511</sub>. In right part, d<sub>1</sub> and d<sub>511</sub> are activated oppositely. We illustrate generated videos by activating d<sub>1</sub>, d<sub>511</sub>, as well as both directions, respectively, while all other directions maintain deactivated (set alpha to 0). The related results indicate that the robot arm can indeed be controlled directly with different trajectories. </h5>
+	<center>
+    <img src="demos/control_generation.gif"  width='1080' height='810' />
+	</center>
+	</div>
+
+	<div class="row">
+    <h2><center>6. Longer Video Generation</center></h2>
+	<h5>We generate longer videos by providing as input >16 vectors of motion noise sequences for both datasets. Specifically, for BAIR-robot, in each instance we input the size 16, 32 and 48 of z<sub>m<sub>i</sub></sub>, in order to generate videos with different temporal lengths. We note that in generated videos of length about 45 frames the robot arm disappears. For VoxCeleb2-mini, which incorporates more complex motion, we find that after 32 frames, generated frames become blurry and ultimately faces melt.</h5>
+	<center>
+	<img src="demos/longer_vox128.gif"  width='1080' height='810' />
+	<img src="demos/longer_vox64.gif"  width='1080' height='810' />
+    <img src="demos/longer_bair.gif"  width='1080' height='810' />
+	</center>
+	</div>
+     
+	</div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+</html>
