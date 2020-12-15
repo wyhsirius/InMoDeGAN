@@ -1,1 +1,1 @@
-# InMoDeGAN
+## InMoDeGAN
